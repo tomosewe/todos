@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
 import { Todo } from "../../models";
 import { createTodo, toggleTodoStatus, removeTodo } from "../../helpers";
 
@@ -34,7 +35,10 @@ export const TodoList = () => {
   return (
     <>
       <h1 className="page-title">todos</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="todo-form">
+        <label className="hidden" htmlFor="todo-input">
+          Enter todo
+        </label>
         <input
           name="todo"
           className="todo__input"
@@ -43,12 +47,14 @@ export const TodoList = () => {
           type="text"
           value={inputValue}
           onChange={handleOnChange}
+          id="todo-input"
         />
       </form>
       <div className="todo__list">
         {todos.map(({ id, text, checked }) => (
-          <div key={id}>
+          <div className="todo__item" key={id}>
             <input
+              className="big-checkbox"
               id={`${id}-checkbox`}
               onChange={handleCheckboxChange}
               type="checkbox"
@@ -56,11 +62,13 @@ export const TodoList = () => {
             />
             <label
               htmlFor={`${id}-checkbox`}
-              className={checked ? "strike-through" : ""}
+              className={`todo__text ${checked ? "strike-through" : ""}`}
             >
               {text}
             </label>{" "}
-            <button onClick={() => handleDelete(id)}>Delete</button>
+            <Button onClick={() => handleDelete(id)} variant="danger">
+              Delete
+            </Button>
           </div>
         ))}
       </div>

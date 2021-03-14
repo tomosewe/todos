@@ -15,6 +15,7 @@ describe("todo.helper", () => {
       expect(result.find((todo) => todo.id === todo2.id).checked).toBe(false);
     });
   });
+
   describe("removeTodo", () => {
     it("should remove the correct item", () => {
       const todo1 = createTodo(faker.random.words());
